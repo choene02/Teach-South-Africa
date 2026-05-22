@@ -126,3 +126,8 @@ Blue & Green (Trust, Growth, Education)
 1. Clone or download the project files:
    ```bash
    git clone https://github.com/your-username/teach-south-africa.git
+
+   ## Change log
+   
+   ###
+   I removed image on my header section, added a paragraph below welcome to teach south africa
