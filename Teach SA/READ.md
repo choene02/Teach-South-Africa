@@ -130,4 +130,4 @@ Blue & Green (Trust, Growth, Education)
    ## Change log
    
    ###
-   I removed image on my header section, added a paragraph below welcome to teach south africa
+   I removed image on my header section, added a paragraph below welcome to teach south africa. changed sub-headimgs only under about page

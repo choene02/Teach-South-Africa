@@ -28,14 +28,15 @@ header p {text-align: center;}
 header {padding: 70px 20px;
         
 }
-header {background-color: lch(95.74% 53.26 105.15);}
+header {background-color: grey;}
 header hr {margin: 1px;
            border: none;
            height: 4px;
            width: 100%;
 }
-.choene {height: 450px;
+.choene {height: 470px;
          width: 100%;
+         border-radius: 20px;
 }
 header h1 {text-shadow: 2px 2px 4px;}
 .partners {display: flex;
@@ -53,6 +54,24 @@ header h1 {text-shadow: 2px 2px 4px;}
 header nav {font-weight: 700;
             font-size: large;
 }
-.main-content {background-color: rgb(136, 219, 243);}
+.main-content {background-color: lch(95.96% 34.39 106.2)}
 
 header div h1 {text-shadow: 2px 2px 4px; }
+
+body { margin: 0;
+       padding: 0;
+}
+header {margin: 0;
+        padding: 10px
+}
+
+* {box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+}
+
+.logo {animation: spinOnce 1s ease-out 1}
+@keyframes spinOnce {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
