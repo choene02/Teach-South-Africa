@@ -1,77 +1,171 @@
 
-<!-- adding color to the heading and sub-headings-->
-h1{text-align: centre;color: white}
-h2{color: red}
-<!--adding background colour and changes on the logo-->
-header {background-color: #dee484;}
+/* =============== Base / Mobile-first =============== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  color: #111;
+  background: #fff;
+}
+
+h1, h2, h3 { margin: 0; }
+
+/* =============== Header / Navigation =============== */
+h1 { text-align: center; color: white; }
+h2 { color: red; }
+
+header {
+  background-color: rgb(216, 49, 49);
+  padding: 20px 16px;
+  width: 100%;
+  margin: 0;
+}
+
+header hr {
+  margin: 1px 0;
+  border: none;
+  height: 4px;
+  width: 100%;
+}
+
+header div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+
+
+header nav ul {display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;}
+
+header p { text-align: center; }
+
+header nav {
+  font-weight: 700;
+  font-size: large;
+  margin-top: 10px;
+}
+
+/* Mobile: stack nav items */
+nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  align-items: center;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+}
+
+header h1 { text-shadow: 2px 2px 4px; }
+header div h1 { text-shadow: 2px 2px 4px; }
+
 .logo {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-}
-nav ul {justify-content: center;
-        display: flex;
-        gap: 10px;
-        list-style: none;
-        padding: 0;
-        margin: 20px 0;
-}
-header div {display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-}
-header p {text-align: center;}
-
-       
-header {padding: 70px 20px;
-        
-}
-header {background-color: grey;}
-header hr {margin: 1px;
-           border: none;
-           height: 4px;
-           width: 100%;
-}
-.choene {height: 470px;
-         width: 100%;
-         border-radius: 20px;
-}
-header h1 {text-shadow: 2px 2px 4px;}
-.partners {display: flex;
-           justify-content: center;
-           align-items: center;
-           gap: 40px;
-           padding: 20px 0;
-           
-}
-.partners img{height: 120px;
-              width: auto;
-              object-fit: contain;
-}
-                
-header nav {font-weight: 700;
-            font-size: large;
-}
-.main-content {background-color: lch(95.96% 34.39 106.2)}
-
-header div h1 {text-shadow: 2px 2px 4px; }
-
-body { margin: 0;
-       padding: 0;
-}
-header {margin: 0;
-        padding: 10px
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
 }
 
-* {box-sizing: border-box;
-   margin: 0;
-   padding: 0;
-}
-
-.logo {animation: spinOnce 1s ease-out 1}
+.logo { animation: spinOnce 1s ease-out 1; }
 @keyframes spinOnce {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
+
+/* =============== Main content container =============== */
+.main-content {
+  background-color: #ffffff;
+  padding: 20px 16px;
+  border-radius: 8px;
+}
+
+/* Ensure pages that only have a header + content get consistent background */
+body {
+  background: #fff;
+}
+
+
+/* Responsive full-width hero image */
+.choene {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  display: block;
+}
+
+/* =============== Partners section helpers =============== */
+.partners {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 0;
+  flex-wrap: wrap;
+}
+
+.partners img {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+/* =============== Tablets / Desktop =============== */
+@media (min-width: 768px) {
+  header { padding: 70px 20px; }
+  nav ul {
+    flex-direction: row;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .logo { width: 120px; height: 120px; }
+  .main-content { padding: 30px 20px; }
+  .choene { height: 470px; object-fit: cover; }
+}
+
+
+
+
+/* Extra global guards (keep responsive) */
+header {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Avoid re-defining breakpoints that conflict with mobile-first nav */
+@media (min-width: 768px) {
+  h1 { font-size: 36px; }
+}
+
+.masters img:hover{
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.masters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  
+  
+}
+

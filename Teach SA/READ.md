@@ -127,7 +127,12 @@ Blue & Green (Trust, Growth, Education)
    ```bash
    git clone https://github.com/your-username/teach-south-africa.git
 
-   ## Change log
+## Change log
    
    ###
    I removed image on my header section, added a paragraph below welcome to teach south africa. changed sub-headimgs only under about page
+
+## change log
+  
+###
+I removed my assets file
