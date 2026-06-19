@@ -3,6 +3,8 @@
 */
 
 (function () {
+  'use strict';
+
   function $(selector, root) {
     return (root || document).querySelector(selector);
   }
@@ -87,7 +89,9 @@
       // initial
       const initialIdx = Math.max(
         0,
-        buttons.findIndex((b) => b.classList.contains('is-active') || b.getAttribute('aria-selected') === 'true')
+        buttons.findIndex(
+          (b) => b.classList.contains('is-active') || b.getAttribute('aria-selected') === 'true'
+        )
       );
       activate(initialIdx === -1 ? 0 : initialIdx);
 
@@ -142,7 +146,9 @@
           document.body.classList.add('no-scroll');
 
           // focus first focusable
-          const focusable = modalEl.querySelector('button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+          const focusable = modalEl.querySelector(
+            'button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
           focusable?.focus();
         });
       });
@@ -198,7 +204,8 @@
       item.addEventListener('click', (e) => {
         e.preventDefault();
         const src = item.getAttribute('data-lightbox-src') || item.getAttribute('href');
-        const cap = item.getAttribute('data-lightbox-caption') || item.getAttribute('data-title') || '';
+        const cap =
+          item.getAttribute('data-lightbox-caption') || item.getAttribute('data-title') || '';
         if (src) open(src, cap);
       });
     });
@@ -245,20 +252,24 @@
         mapEl.innerHTML =
           '<p class="map-fallback">Map unavailable offline. ' +
           'Open <a href="https://www.google.com/maps?q=' +
-          encodeURIComponent(lat + ',' + lng) +
+          encodeURIComponent((Number.isFinite(lat) ? lat : 0) + ',' + (Number.isFinite(lng) ? lng : 0)) +
           '" target="_blank" rel="noopener">Google Maps</a>.</p>';
         return;
       }
 
-      const center = [Number.isFinite(lat) ? lat : -26.2041, Number.isFinite(lng) ? lng : 28.0473];
-      const map = window.L.map(mapEl, {
-        zoomControl: true
-      }).setView(center, 13);
+      const center = [
+        Number.isFinite(lat) ? lat : -26.2041,
+        Number.isFinite(lng) ? lng : 28.0473
+      ];
 
-      window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
+      const map = window.L.map(mapEl, { zoomControl: true }).setView(center, 13);
+
+      window.L
+        .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors'
+        })
+        .addTo(map);
 
       window.L.marker(center).addTo(map).bindPopup(placeName).openPopup();
     })();
@@ -288,7 +299,7 @@
   }
 
   // ------------------------------
-  // Boot
+  // Dynamic search/sort DOM manipulation
   // ------------------------------
   function initSearchDynamic() {
     const roots = $all('[data-search-root]');
@@ -296,69 +307,81 @@
 
     roots.forEach((root) => {
       const controls = root;
-      const listRoot = controls.closest('.search-controls')
-        ? controls.parentElement.querySelector('[data-dynamic-list]')
-        : controls.parentElement?.querySelector('[data-dynamic-list]');
-
+      const listRoot = controls.parentElement?.querySelector('[data-dynamic-list]');
       const input = controls.querySelector('[data-search-input]');
       const sort = controls.querySelector('[data-search-sort]');
       const resultsRoot = controls.closest('.interactive-block')?.querySelector('[data-search-results]');
       const emptyEl = resultsRoot?.querySelector('[data-search-empty]');
 
-      if (!listRoot || !input || !sort) return;
+      if (!listRoot || !input || !sort || !resultsRoot || !emptyEl) return;
 
       const allItems = $all('[data-dynamic-list] .dyn-item', listRoot);
       if (!allItems.length) return;
 
       const getText = (el) => {
-        const title = el.getAttribute('data-title') || el.querySelector('h3')?.textContent || '';
+        const title = el.getAttribute('data-title') || el.querySelector('.title')?.textContent;
         const tags = el.getAttribute('data-tags') || '';
-        const body = el.textContent || '';
-        return (title + ' ' + tags + ' ' + body).toLowerCase();
+        return `${title || ''} ${tags}`.toLowerCase().trim();
       };
 
-      const apply = () => {
-        const q = input.value.trim().toLowerCase();
+      const render = () => {
+        const q = (input.value || '').toLowerCase().trim();
         const sortMode = sort.value;
 
-        let filtered = allItems.filter((el) => {
-          if (!q) return true;
-          return getText(el).includes(q);
-        });
+        let items = allItems
+          .map((el) => ({ el, text: getText(el) }))
+          .filter((x) => (!q ? true : x.text.includes(q)));
 
         if (sortMode === 'a-z') {
-          filtered = filtered.slice().sort((a, b) => {
-            const at = (a.getAttribute('data-title') || '').toLowerCase();
-            const bt = (b.getAttribute('data-title') || '').toLowerCase();
-            return at.localeCompare(bt);
-          });
+          items.sort((a, b) => (a.el.getAttribute('data-title') || '').localeCompare(b.el.getAttribute('data-title') || ''));
         }
 
-        // relevance = current order (default)
+        allItems.forEach(({ style: {}, hidden: {}, dataset: {} }) => {});
 
-        // toggle visibility
+        let visibleCount = 0;
         allItems.forEach((el) => {
           el.style.display = 'none';
         });
-        filtered.forEach((el) => {
-          el.style.display = '';
+
+        items.forEach((x) => {
+          x.el.style.display = '';
+          visibleCount += 1;
         });
 
-        if (emptyEl) emptyEl.style.display = filtered.length ? 'none' : 'block';
-
-        // For a-z sorting, reorder in DOM for nicer feel
-        if (sortMode === 'a-z') {
-          filtered.forEach((el) => listRoot.appendChild(el));
-        }
+        emptyEl.style.display = visibleCount ? 'none' : '';
       };
 
-      input.addEventListener('input', apply);
-      sort.addEventListener('change', apply);
-      apply();
+      input.addEventListener('input', render);
+      sort.addEventListener('change', render);
+
+      render();
     });
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  // ------------------------------
+  // Simple client-side forms (no backend)
+  // ------------------------------
+  function initForms() {
+    // generic: if form has id contactForm or enquiryForm, show friendly status
+    const forms = $all('form');
+    forms.forEach((form) => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const statusId = form.querySelector('[role="status"]')?.id;
+        const statusEl = statusId ? document.getElementById(statusId) : null;
+
+        if (statusEl) {
+          statusEl.textContent = 'Thanks! Your message has been received (demo).';
+        }
+
+        // reset form
+        form.reset();
+      });
+    });
+  }
+
+  function boot() {
     initAccordions();
     initTabs();
     initModals();
@@ -366,131 +389,9 @@
     initMap();
     initScrollReveal();
     initSearchDynamic();
+    initForms();
+  }
 
-    // Enquiry form: client-side validation + simulated AJAX submission (demo)
-    const form = document.getElementById('enquiryForm');
-    if (form) {
-      const status = document.getElementById('form-status');
-
-      const setStatus = (text) => {
-        if (!status) return;
-        status.textContent = text;
-        status.classList.remove('pulse');
-        // force reflow to restart animation
-        status.offsetWidth;
-        status.classList.add('pulse');
-      };
-
-      const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      const normalizePhone = (v) => (v || '').replace(/\s+/g, '').replace(/[^0-9+]/g, '');
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const fullName = document.getElementById('name')?.value?.trim() || '';
-        const email = document.getElementById('email')?.value?.trim() || '';
-        const phone = normalizePhone(document.getElementById('phone')?.value || '');
-        const interest = document.getElementById('interest')?.value || '';
-        const availability = document.getElementById('availability')?.value || '';
-        const message = document.getElementById('message')?.value?.trim() || '';
-
-        // Error handling
-        if (!fullName || fullName.length < 2) return setStatus('Please enter your full name (at least 2 characters).');
-        if (!email || !isValidEmail(email)) return setStatus('Please enter a valid email address.');
-
-        // phone format validation (allow blank)
-        if (phone && phone.length < 7) return setStatus('Please enter a valid phone number (or leave it blank).');
-
-        if (!interest) return setStatus('Please choose what you are enquiring about.');
-        if (!message || message.length < 10)
-          return setStatus('Please provide more details (at least 10 characters) so we can respond accurately.');
-
-        setStatus('Submitting your enquiry...');
-
-        const payload = {
-          fullName,
-          email,
-          phone,
-          interest,
-          availability,
-          message,
-          submittedAt: new Date().toISOString()
-        };
-
-        try {
-          // Simulated async submission (no backend endpoint in this static project)
-          await fetch('about:blank', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          const replyMap = {
-            ambassador:
-              'Thanks for your enquiry! Our ambassador selection is competitive. Based on your timeline, we will share the next steps and expected process windows.',
-            partner:
-              'Thanks for your partnership enquiry! We will review sponsorship/partnership availability and respond with options, estimated costs, and timelines.',
-            volunteer:
-              'Thanks for volunteering! We will confirm availability for the selected timeline and share the next onboarding steps.',
-            general:
-              'Thanks for your message! We will route your enquiry to the correct team and respond with the relevant details and next steps.'
-          };
-
-          const baseReply = replyMap[interest] || replyMap.general;
-          const extra = availability ? ` Preferred timeline: ${availability.replace(/_/g, ' ')}.` : '';
-          setStatus(baseReply + extra);
-        } catch (err) {
-          setStatus('Something went wrong while submitting. Please try again.');
-        }
-      });
-    }
-
-
-    // Contact form: validate + compile email-style preview (demo)
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-      contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const status = document.getElementById('contact-status');
-
-        const name = document.getElementById('contact_name')?.value?.trim() || '';
-        const email = document.getElementById('contact_email')?.value?.trim() || '';
-        const type = document.getElementById('contact_type')?.value || '';
-        const msg = document.getElementById('contact_message')?.value?.trim() || '';
-
-        if (!name || !email || !msg || !type) {
-          if (status) {
-            status.textContent = 'Please complete all required fields.';
-            status.classList.add('pulse');
-          }
-          return;
-        }
-
-        // Demo compile into mailto. (In a real deployment you would POST to a backend.)
-        const to = 'info@teachsouthafrica.org';
-        const subject = `Teach SA contact - ${type}`;
-        const body = [
-          `Name: ${name}`,
-          `Email: ${email}`,
-          `Message type: ${type}`,
-          '',
-          msg
-        ].join('\n');
-
-        const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-        if (status) {
-          status.textContent = 'Message prepared. Your email client will open to send it.';
-          status.classList.add('pulse');
-        }
-
-        // Trigger mailto
-        window.location.href = mailto;
-      });
-    }
-
-  });
+  document.addEventListener('DOMContentLoaded', boot);
 })();
-
 

@@ -141,3 +141,16 @@ Blue & Green (Trust, Growth, Education)
    linked  css to enquiry page 
    created a folder for images 
    styled the enquiry page
+## reference list(harvard style)
+w3 schools
+
+## screenshot
+
+![alt text](screenshot1.png)
+![alt text](sreenshot2.png)
+![alt text](screenshot3.png)
+![alt text](screenshot4.png)
+![alt text](screenshot5.png)
+![alt text](screenshot6-1.png)
+![alt text](screenshot7.png)
+![alt text](screenshot8.png)
