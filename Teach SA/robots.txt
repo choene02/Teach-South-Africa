@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Avoid indexing student artifacts / dev files if present
+Disallow: /assets/
+Disallow: /Teach SA~*/
+

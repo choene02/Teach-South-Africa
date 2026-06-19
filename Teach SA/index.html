@@ -2,16 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Teach South Africa | Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teach South Africa | Empowering Learners & Educators</title>
+    <meta name="description" content="Teach South Africa is a non-profit organisation improving education in rural and underserved schools through educator training, learning resources and community support."/>
+    <meta name="keywords" content="Teach South Africa, non-profit education, rural schools, educator training, learning resources, STEM teaching, South Africa"/>
     <!-- No CSS included - pure HTML structure for marks allocation -->
-     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
+
+    
 </head>
 <body>
 
     <!-- ================= HEADER & NAVIGATION ================= -->
     <header>
         <div>
-            <img src="image4.jpg" alt="website logo" width="150" class="logo" >
+            <img src="teach/image4.jpg" alt="website logo" width="150" class="logo" >
             <h1> Teach South Africa</h1>
             
         </div>
@@ -29,29 +34,144 @@
         <p>Empowering learners & educators since 2015</p>
       
     </header>
-         <div class="main-content">
+    <div class="main-content">
     <h2>Welcome to Teach South Africa</h2>
+    <p>
+      Discover our mission to improve education in rural and underserved South Africa through educator training, STEM teaching support, and digital learning resources.
+    </p>
+
          <p>Teach south africa is a non profit organisation that has an ambition of improving south africa`s education levels, we provide training and skill refining for people whom have interest in teaching. </p>
-         <img src="image3.webp" alt="Teach SA" width="100%" class="choene">
-  
-        <!-- Proposed Features / Interactive preview -->
-        <section>
-            <h2>What You'll Find Here</h2>
-            <ul>
-                <li> Homepage with mission, vision & highlights</li>
-                <li> About Us – history, team profiles & impact</li>
-                <li> Blog/News – updates & success stories</li>
-                <li> Contact – enquiry form & location details</li>
-                <li> partners</li>
-            </ul>s
+         <img src="teach/image3.webp" alt="Teach SA" width="100%" class="choene" data-reveal>
+
+        <!-- Gallery with Lightbox -->
+         <section class="interactive-block" data-reveal>
+           <h2>Gallery</h2>
+           <p>Explore Teach South Africa in action—from community engagement to classroom learning and educator training.</p>
+
+          <div class="gallery" role="list">
+            <a href="#" class="gallery-item" role="listitem" data-lightbox-item data-lightbox-src="teach/image1.jpeg" data-lightbox-caption="Classroom learning">
+              <img src="teach/image1.jpeg" alt="Classroom learning" loading="lazy" />
+            </a>
+            <a href="#" class="gallery-item" role="listitem" data-lightbox-item data-lightbox-src="teach/image2.jpeg" data-lightbox-caption="Teacher training">
+              <img src="teach/image2.jpeg" alt="Teacher training" loading="lazy" />
+            </a>
+            <a href="#" class="gallery-item" role="listitem" data-lightbox-item data-lightbox-src="teach/image4.jpg" data-lightbox-caption="Community engagement">
+              <img src="teach/image4.jpg" alt="Community engagement" loading="lazy" />
+            </a>
+            <a href="#" class="gallery-item" role="listitem" data-lightbox-item data-lightbox-src="teach/image5.png" data-lightbox-caption="Learning resources">
+              <img src="teach/image3.0" alt="Learning resources" loading="lazy" width="300" height="200" />
+            </a>
+
+          </div>
         </section>
 
+  
+        <!-- Interactive FAQ Accordion -->
+        <section class="interactive-block" data-reveal>
+            <h2>What You'll Find Here</h2>
+
+            <div data-accordion>
+                <div class="acc-item" data-accordion-item>
+                    <button type="button" class="acc-button" data-accordion-button aria-expanded="false">
+                        Homepage: Mission, Vision & Highlights
+                    </button>
+                    <div class="acc-panel" data-accordion-panel>
+                        <p>Explore how Teach South Africa has been empowering learners and educators since 2015.</p>
+                    </div>
+                </div>
+
+                <div class="acc-item" data-accordion-item>
+                    <button type="button" class="acc-button" data-accordion-button aria-expanded="false">
+                        About Us: Our Values & Overview
+                    </button>
+                    <div class="acc-panel" data-accordion-panel>
+                        <p>Learn about our mission, vision and what we stand for.</p>
+                    </div>
+                </div>
+
+                <div class="acc-item" data-accordion-item>
+                    <button type="button" class="acc-button" data-accordion-button aria-expanded="false">
+                        Contact & Enquiry: Get in touch
+                    </button>
+                    <div class="acc-panel" data-accordion-panel>
+                        <p>Submit an enquiry and find our office location.</p>
+                    </div>
+                </div>
+
+                <div class="acc-item" data-accordion-item>
+                    <button type="button" class="acc-button" data-accordion-button aria-expanded="false">
+                        Partners: Current & Past Collaboration
+                    </button>
+                    <div class="acc-panel" data-accordion-panel>
+                        <p>See who supports our work and how you can partner with us.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
         <!-- Quick Impact Snapshot -->
-        <section>
+        <section class="interactive-block" data-reveal>
             <h2>Our Impact at a Glance</h2>
             <p>Since 2015, Teach South Africa has partnered with over 120 rural schools, trained 450+ educators, and distributed 15,000+ digital learning resources. Join us to shape the future of education.</p>
-            <p><a href="contact.html"> Become a donor or volunteer →</a></p>
+<p>
+              <a href="contact.html" class="cta-link">Become a donor or volunteer →</a>
+              <a href="#" class="cta-link cta-secondary" data-modal-open="donateModal">See donation options</a>
+            </p>
+
+        <section class="interactive-block" data-reveal>
+          <h2>Quick Search (Dynamic)</h2>
+          <p>Search our highlights below (filters instantly in the browser).</p>
+
+          <div class="search-controls" data-search-root>
+            <input class="search-input" type="search" placeholder="Search highlights..." aria-label="Search highlights" data-search-input>
+            <select class="search-select" aria-label="Sort" data-search-sort>
+              <option value="relevance">Sort: Relevance</option>
+              <option value="a-z">Sort: A-Z</option>
+            </select>
+          </div>
+
+          <div class="search-results" data-search-results aria-live="polite">
+            <div class="search-empty" data-search-empty>No matching results.</div>
+
+            <div class="dynamic-list" data-dynamic-list>
+              <div class="dyn-item" data-tags="mission vision impact educators rural schools" data-title="Mission & Vision">
+                <h3>Mission & Vision</h3>
+                <p>We focus on equity in education—supporting learners and training educators.</p>
+              </div>
+              <div class="dyn-item" data-tags="impact rural schools educators resources" data-title="Impact">
+                <h3>Impact</h3>
+                <p>Partnered with rural schools and distributed digital learning resources.</p>
+              </div>
+              <div class="dyn-item" data-tags="programmes volunteering mentorship workshops" data-title="Programmes">
+                <h3>Programmes</h3>
+                <p>Workshops, mentorship, and learning support for communities.</p>
+              </div>
+              <div class="dyn-item" data-tags="resources digital learning" data-title="Digital Learning Resources">
+                <h3>Digital Learning Resources</h3>
+                <p>Interactive materials that help teachers and learners stay engaged.</p>
+              </div>
+            </div>
+          </div>
         </section>
+      </section>
+
+
+        <!-- Donate Modal -->
+        <div class="modal" data-modal id="donateModal" aria-hidden="true">
+          <div class="modal-dialog" data-modal-dialog role="dialog" aria-modal="true" aria-label="Donation options">
+            <button class="modal-close" data-modal-close type="button" aria-label="Close">✕</button>
+            <h3>Donation Options</h3>
+            <ul>
+              <li><strong>Monthly giving</strong> (supports recurring learning programmes)</li>
+              <li><strong>School resources</strong> (digital devices & learning materials)</li>
+              <li><strong>Volunteer support</strong> (community workshops & mentorship)</li>
+            </ul>
+            <p class="modal-note">This is a demo modal for the project UI.</p>
+            <a class="modal-primary" href="enquiry.html">Enquire about partnering</a>
+          </div>
+        </div>
+
    
 
     <!-- ================= FOOTER ================= -->
@@ -63,5 +183,12 @@
     </footer>
     
   </div>
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="lightbox-close" class="lightbox-close" type="button" aria-label="Close">✕</button>
+    <img id="lightbox-img" class="lightbox-img" alt="" />
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+  </div>
+
+  <script src="index.js"></script>
 </body>
 </html>

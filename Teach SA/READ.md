@@ -129,10 +129,15 @@ Blue & Green (Trust, Growth, Education)
 
 ## Change log
    
-   ###
+   ### remove
    I removed image on my header section, added a paragraph below welcome to teach south africa. changed sub-headimgs only under about page
 
-## change log
-  
-###
-I removed my assets file
+   I removed my assets file
+
+   ### added
+   I added images under my partners.html,
+   five images.
+
+   linked  css to enquiry page 
+   created a folder for images 
+   styled the enquiry page

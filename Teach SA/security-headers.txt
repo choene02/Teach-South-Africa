@@ -1,0 +1,11 @@
+Recommended security headers (configure in your hosting/CDN, not directly in static HTML):
+
+Content-Security-Policy: default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; script-src 'self' https: 'unsafe-inline'; connect-src 'self' https:; frame-src https:;
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(), microphone=(), camera=()
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+(If you deploy on HTTPS, ensure HSTS is enabled.)
+
