@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquire | Teach South Africa</title>
+    <meta name="description" content="Send an enquiry to Teach South Africa about volunteering, partnership opportunities or becoming an ambassador."/>
+    <meta name="keywords" content="Teach South Africa enquiry, volunteering, partnership opportunities, ambassador"/>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="partners.html">Partners</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="impact.html">Impact</a></li>
+        <li><a href="enquiry.html">Enquiry</a></li>
+      </ul>
+    </nav>
+    <p>Empowering learners & educators since 2015</p>
+  </header>
+
+  <section class="enquiry-section">
+    <h2>Enquire About Teach South Africa</h2>
+    <p>Want to become an ambassador or learn more? Send us a message.</p>
+
+    <form id="enquiryForm" class="enquiry-form" action="#" method="POST" novalidate>
+
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" name="name" autocomplete="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="082 123 4567">
+      </div>
+
+      <div class="form-group">
+        <label for="interest">I am interested in *</label>
+        <select id="interest" name="interest" required>
+          <option value="">Select an option</option>
+          <option value="ambassador">Become An Ambassador</option>
+          <option value="partner">Partnership / Sponsorship</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="general">General Enquiry</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="availability">Preferred timeline (optional)</label>
+        <select id="availability" name="availability">
+          <option value="">No preference</option>
+          <option value="soon">As soon as possible</option>
+          <option value="this_month">This month</option>
+          <option value="next_month">Next month</option>
+          <option value="later">Later / long-term</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Tell us what you need (cost, availability, and details) *</label>
+        <textarea id="message" name="message" rows="5" required placeholder="Example: sponsorship for classroom resources / availability for volunteering / dates and cost estimate..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Send Enquiry</button>
+      <p id="form-status" role="status" aria-live="polite"></p>
+
+    </form>
+  </section>
+
+  <footer>
+    <hr>
+    <p>&copy; 2025 Teach South Africa – Non-profit educational organisation. All rights reserved.</p>
+    <p> Head Office: Johannesburg, South Africa |  info@teachsouthafrica.org |  +27 11 555 1234</p>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
+
