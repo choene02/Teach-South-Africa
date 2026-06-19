@@ -367,19 +367,129 @@
     initScrollReveal();
     initSearchDynamic();
 
-    // Advanced DOM manipulation demo: smooth highlight on enquiry submit
+    // Enquiry form: client-side validation + simulated AJAX submission (demo)
     const form = document.getElementById('enquiryForm');
     if (form) {
-      form.addEventListener('submit', (e) => {
-        // Prevent real submission in student project
+      const status = document.getElementById('form-status');
+
+      const setStatus = (text) => {
+        if (!status) return;
+        status.textContent = text;
+        status.classList.remove('pulse');
+        // force reflow to restart animation
+        status.offsetWidth;
+        status.classList.add('pulse');
+      };
+
+      const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const normalizePhone = (v) => (v || '').replace(/\s+/g, '').replace(/[^0-9+]/g, '');
+
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const status = document.getElementById('form-status');
-        if (status) {
-          status.textContent = 'Enquiry sent! We will get back to you shortly.';
-          status.classList.add('pulse');
+
+        const fullName = document.getElementById('name')?.value?.trim() || '';
+        const email = document.getElementById('email')?.value?.trim() || '';
+        const phone = normalizePhone(document.getElementById('phone')?.value || '');
+        const interest = document.getElementById('interest')?.value || '';
+        const availability = document.getElementById('availability')?.value || '';
+        const message = document.getElementById('message')?.value?.trim() || '';
+
+        // Error handling
+        if (!fullName || fullName.length < 2) return setStatus('Please enter your full name (at least 2 characters).');
+        if (!email || !isValidEmail(email)) return setStatus('Please enter a valid email address.');
+
+        // phone format validation (allow blank)
+        if (phone && phone.length < 7) return setStatus('Please enter a valid phone number (or leave it blank).');
+
+        if (!interest) return setStatus('Please choose what you are enquiring about.');
+        if (!message || message.length < 10)
+          return setStatus('Please provide more details (at least 10 characters) so we can respond accurately.');
+
+        setStatus('Submitting your enquiry...');
+
+        const payload = {
+          fullName,
+          email,
+          phone,
+          interest,
+          availability,
+          message,
+          submittedAt: new Date().toISOString()
+        };
+
+        try {
+          // Simulated async submission (no backend endpoint in this static project)
+          await fetch('about:blank', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const replyMap = {
+            ambassador:
+              'Thanks for your enquiry! Our ambassador selection is competitive. Based on your timeline, we will share the next steps and expected process windows.',
+            partner:
+              'Thanks for your partnership enquiry! We will review sponsorship/partnership availability and respond with options, estimated costs, and timelines.',
+            volunteer:
+              'Thanks for volunteering! We will confirm availability for the selected timeline and share the next onboarding steps.',
+            general:
+              'Thanks for your message! We will route your enquiry to the correct team and respond with the relevant details and next steps.'
+          };
+
+          const baseReply = replyMap[interest] || replyMap.general;
+          const extra = availability ? ` Preferred timeline: ${availability.replace(/_/g, ' ')}.` : '';
+          setStatus(baseReply + extra);
+        } catch (err) {
+          setStatus('Something went wrong while submitting. Please try again.');
         }
       });
     }
+
+
+    // Contact form: validate + compile email-style preview (demo)
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const status = document.getElementById('contact-status');
+
+        const name = document.getElementById('contact_name')?.value?.trim() || '';
+        const email = document.getElementById('contact_email')?.value?.trim() || '';
+        const type = document.getElementById('contact_type')?.value || '';
+        const msg = document.getElementById('contact_message')?.value?.trim() || '';
+
+        if (!name || !email || !msg || !type) {
+          if (status) {
+            status.textContent = 'Please complete all required fields.';
+            status.classList.add('pulse');
+          }
+          return;
+        }
+
+        // Demo compile into mailto. (In a real deployment you would POST to a backend.)
+        const to = 'info@teachsouthafrica.org';
+        const subject = `Teach SA contact - ${type}`;
+        const body = [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Message type: ${type}`,
+          '',
+          msg
+        ].join('\n');
+
+        const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        if (status) {
+          status.textContent = 'Message prepared. Your email client will open to send it.';
+          status.classList.add('pulse');
+        }
+
+        // Trigger mailto
+        window.location.href = mailto;
+      });
+    }
+
   });
 })();
 

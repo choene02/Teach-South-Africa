@@ -44,6 +44,43 @@ Follow Us
 Facebook Twitter Youtube Instagram Linkedin
 </p>
 
+<section class="interactive-block" data-reveal>
+  <h2>Send us a message</h2>
+  <p>Tell us what you need. We’ll respond as soon as possible.</p>
+
+  <form id="contactForm" class="enquiry-form" action="#" method="POST" novalidate>
+    <div class="form-group">
+      <label for="contact_name">Full Name *</label>
+      <input type="text" id="contact_name" name="contact_name" autocomplete="name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="contact_email">Email Address *</label>
+      <input type="email" id="contact_email" name="contact_email" autocomplete="email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="contact_type">Message type *</label>
+      <select id="contact_type" name="contact_type" required>
+        <option value="">Select an option</option>
+        <option value="volunteering">Volunteering</option>
+        <option value="sponsorship">Sponsorship</option>
+        <option value="partnership">Partnership</option>
+        <option value="general">General message</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="contact_message">Your message *</label>
+      <textarea id="contact_message" name="contact_message" rows="5" required placeholder="Write your message here..."></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">Send Message</button>
+    <p id="contact-status" role="status" aria-live="polite"></p>
+  </form>
+</section>
+
+
 <!-- Interactive Map (Leaflet fallback to link) -->
 <div class="map-wrap" data-reveal>
   <h2>Our Location</h2>
